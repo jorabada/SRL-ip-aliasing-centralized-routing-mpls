@@ -1,0 +1,106 @@
+name: srl-ip-aliasing-centralized-routing-mpls
+
+topology:
+  defaults:
+    kind: srl
+  kinds:
+    srl:
+      image: srlinux:latest
+      license: ./license.txt      
+    linux:
+      image: registry.srlinux.dev/pub/hellt/network-multitool:latest
+  nodes:
+    ### FABRIC ###
+    leaf1:
+      kind: srl
+      type: sxr1x44s
+      # startup-config: config/leaf1.cfg
+    leaf2:
+      kind: srl
+      type: sxr1x44s    
+      # startup-config: config/leaf2.cfg
+    leaf3:
+      kind: srl
+      type: sxr1x44s    
+      # startup-config: config/leaf3.cfg
+    leaf4:
+      kind: srl
+      type: sxr1x44s    
+      # startup-config: config/leaf4.cfg
+    anchor5:
+      kind: srl
+      type: sxr1x44s    
+      # startup-config: config/anchor5.cfg
+    anchor6:
+      kind: srl
+      type: sxr1x44s    
+      # startup-config: config/anchor6.cfg
+    borderleaf1:
+      kind: srl
+      type: sxr1x44s    
+      # startup-config: config/borderleaf1.cfg
+    borderleaf2:
+      kind: srl
+      type: sxr1x44s    
+      # startup-config: config/borderleaf2.cfg
+    ### CLIENTS ###
+    client1:
+      kind: linux
+      binds:
+        - ./config/eth1.sh:/tmp/eth1.sh
+      exec:
+        - bash /tmp/eth1.sh
+        - ip link set eth1.1 address 00:c1:ab:00:00:01
+        - ip addr add 100.0.0.2/24 dev eth1.1
+        - ip link set eth1.2 address 00:c1:ab:00:00:01
+        - ip addr add 100.0.0.20/24 dev eth1.2        
+    client2:
+      kind: linux
+      binds:
+        - ./config/eth1.sh:/tmp/eth1.sh
+      exec:
+        - bash /tmp/eth1.sh
+        - ip link set eth1.1 address 00:c1:ab:00:00:02
+        - ip addr add 200.0.0.2/24 dev eth1.1
+        - ip link set eth1.2 address 00:c1:ab:00:00:02
+        - ip addr add 200.0.0.20/24 dev eth1.2        
+    ### SERVERS ###
+    server1:
+      kind: srl
+      type: ixrd3    
+      # startup-config: config/server1.cfg
+    server2:
+      kind: srl
+      type: ixrd3    
+      # startup-config: config/server2.cfg
+
+  links:
+    # clients links towards borderleafs
+    - endpoints: ["client1:eth1", "borderleaf1:e1-1"]
+    - endpoints: ["client2:eth1", "borderleaf2:e1-1"]
+    # server links towards leaves
+    ## server1
+    - endpoints: ["server1:e1-1", "leaf1:e1-1"]
+    - endpoints: ["server1:e1-2", "leaf2:e1-1"]
+    ## server2
+    - endpoints: ["server2:e1-1", "leaf3:e1-1"]
+    - endpoints: ["server2:e1-2", "leaf4:e1-1"]
+    # leaf-borderleaf links
+    ## leaf1
+    - endpoints: ["leaf1:e1-49", "borderleaf1:e1-11"]
+    - endpoints: ["leaf1:e1-50", "borderleaf2:e1-21"]
+    ## leaf2
+    - endpoints: ["leaf2:e1-49", "borderleaf1:e1-12"]
+    - endpoints: ["leaf2:e1-50", "borderleaf2:e1-22"]
+    ## leaf3
+    - endpoints: ["leaf3:e1-49", "borderleaf1:e1-13"]
+    - endpoints: ["leaf3:e1-50", "borderleaf2:e1-23"]
+    ## leaf4
+    - endpoints: ["leaf4:e1-49", "borderleaf1:e1-14"]
+    - endpoints: ["leaf4:e1-50", "borderleaf2:e1-24"]
+    ## anchor5
+    - endpoints: ["anchor5:e1-49", "borderleaf1:e1-15"]
+    - endpoints: ["anchor5:e1-50", "borderleaf2:e1-25"]
+    ## anchor6
+    - endpoints: ["anchor6:e1-49", "borderleaf1:e1-16"]
+    - endpoints: ["anchor6:e1-50", "borderleaf2:e1-26"]
