@@ -14,35 +14,35 @@ topology:
     leaf1:
       kind: srl
       type: sxr1x44s
-      # startup-config: config/leaf1.cfg
+      startup-config: config/leaf1.cfg
     leaf2:
       kind: srl
       type: sxr1x44s    
-      # startup-config: config/leaf2.cfg
+      startup-config: config/leaf2.cfg
     leaf3:
       kind: srl
       type: sxr1x44s    
-      # startup-config: config/leaf3.cfg
+      startup-config: config/leaf3.cfg
     leaf4:
       kind: srl
       type: sxr1x44s    
-      # startup-config: config/leaf4.cfg
+      startup-config: config/leaf4.cfg
     anchor5:
       kind: srl
       type: sxr1x44s    
-      # startup-config: config/anchor5.cfg
+      startup-config: config/anchor5.cfg
     anchor6:
       kind: srl
       type: sxr1x44s    
-      # startup-config: config/anchor6.cfg
+      startup-config: config/anchor6.cfg
     borderleaf1:
       kind: srl
       type: sxr1x44s    
-      # startup-config: config/borderleaf1.cfg
+      startup-config: config/borderleaf1.cfg
     borderleaf2:
       kind: srl
       type: sxr1x44s    
-      # startup-config: config/borderleaf2.cfg
+      startup-config: config/borderleaf2.cfg
     ### CLIENTS ###
     client1:
       kind: linux
@@ -53,7 +53,9 @@ topology:
         - ip link set eth1.1 address 00:c1:ab:00:00:01
         - ip addr add 100.0.0.2/24 dev eth1.1
         - ip link set eth1.2 address 00:c1:ab:00:00:01
-        - ip addr add 100.0.0.20/24 dev eth1.2        
+        - ip addr add 100.0.0.20/24 dev eth1.2
+        - ip route del default
+        - ip route add default via 100.0.0.1 dev eth1.1        
     client2:
       kind: linux
       binds:
@@ -63,16 +65,18 @@ topology:
         - ip link set eth1.1 address 00:c1:ab:00:00:02
         - ip addr add 200.0.0.2/24 dev eth1.1
         - ip link set eth1.2 address 00:c1:ab:00:00:02
-        - ip addr add 200.0.0.20/24 dev eth1.2        
+        - ip addr add 200.0.0.20/24 dev eth1.2   
+        - ip route del default 
+        - ip route add default via 200.0.0.1 dev eth1.1     
     ### SERVERS ###
     server1:
       kind: srl
       type: ixrd3    
-      # startup-config: config/server1.cfg
+      startup-config: config/server1.cfg
     server2:
       kind: srl
       type: ixrd3    
-      # startup-config: config/server2.cfg
+      startup-config: config/server2.cfg
 
   links:
     # clients links towards borderleafs
