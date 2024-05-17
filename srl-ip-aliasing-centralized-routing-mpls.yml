@@ -87,20 +87,20 @@ topology:
     - endpoints: ["server2:e1-2", "leaf4:e1-1"]
     # leaf-borderleaf links
     ## leaf1
-    - endpoints: ["leaf1:e1-49", "borderleaf1:e1-11"]
-    - endpoints: ["leaf1:e1-50", "borderleaf2:e1-21"]
+    - endpoints: ["leaf1:e1-39", "borderleaf1:e1-11"]
+    - endpoints: ["leaf1:e1-40", "borderleaf2:e1-21"]
     ## leaf2
-    - endpoints: ["leaf2:e1-49", "borderleaf1:e1-12"]
-    - endpoints: ["leaf2:e1-50", "borderleaf2:e1-22"]
+    - endpoints: ["leaf2:e1-39", "borderleaf1:e1-12"]
+    - endpoints: ["leaf2:e1-40", "borderleaf2:e1-22"]
     ## leaf3
-    - endpoints: ["leaf3:e1-49", "borderleaf1:e1-13"]
-    - endpoints: ["leaf3:e1-50", "borderleaf2:e1-23"]
+    - endpoints: ["leaf3:e1-39", "borderleaf1:e1-13"]
+    - endpoints: ["leaf3:e1-40", "borderleaf2:e1-23"]
     ## leaf4
-    - endpoints: ["leaf4:e1-49", "borderleaf1:e1-14"]
-    - endpoints: ["leaf4:e1-50", "borderleaf2:e1-24"]
+    - endpoints: ["leaf4:e1-39", "borderleaf1:e1-14"]
+    - endpoints: ["leaf4:e1-40", "borderleaf2:e1-24"]
     ## anchor5
-    - endpoints: ["anchor5:e1-49", "borderleaf1:e1-15"]
-    - endpoints: ["anchor5:e1-50", "borderleaf2:e1-25"]
+    - endpoints: ["anchor5:e1-39", "borderleaf1:e1-15"]
+    - endpoints: ["anchor5:e1-40", "borderleaf2:e1-25"]
     ## anchor6
-    - endpoints: ["anchor6:e1-49", "borderleaf1:e1-16"]
-    - endpoints: ["anchor6:e1-50", "borderleaf2:e1-26"]
+    - endpoints: ["anchor6:e1-39", "borderleaf1:e1-16"]
+    - endpoints: ["anchor6:e1-40", "borderleaf2:e1-26"]
